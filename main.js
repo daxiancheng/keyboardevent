@@ -7,6 +7,11 @@ var keys = {
 var hash = {
     'q':'www.qq.com','w':'www.weibo.com','e':'www.ele.me','r':'www.renren.com','t':'lol.qq.com'
 }
+//取出localStorage中的hash
+var hashInlocalStorage = JSON.parse(localStorage.getItem('websitechange') || 'null');
+if(hashInlocalStorage){
+    hash = hashInlocalStorage;
+}
 index0 = 0;
 while(index0 < keys['length']){
     div1 = document.createElement('div');
@@ -17,7 +22,14 @@ while(index0 < keys['length']){
         kbd1 = document.createElement('kbd');
         kbd1.textContent = row[index1];
         button1 = document.createElement('button');
-        button1.textContent = 'E'
+        button1.textContent = 'E';
+        button1.id = row[index1];
+        button1.onclick = function(daxian){
+            key = (daxian.target.id);
+            x = prompt('输入网址');
+            hash[key] = x;
+            localStorage.setItem('websitechange',JSON.stringify(hash));
+        }
         div1.appendChild(kbd1);
         kbd1.appendChild(button1);
         index1 = index1+1;
@@ -29,3 +41,4 @@ document.onkeypress = function(cheng){
     website = hash[key];
     window.open('http://' + website, '_blank');
 }
+
